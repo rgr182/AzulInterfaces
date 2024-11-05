@@ -19,8 +19,28 @@ namespace ApiInterfaces.Controllers
         [HttpPost("convert-millimeters")]
         public IActionResult ConvertMillimeters([FromBody] ConvertRequest request)
         {
-            var result = _converters.ConvertMilimeters(request.Milimeters, request.Unit.ToString().ToLower());
-            return Ok(result);
+            try
+            {
+                var result = _converters.ConvertMilimeters(request.Milimeters, request.Unit.ToString().ToLower());
+
+                if (result == null) { 
+                    return NoContent();
+                }
+
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+                throw;
+            }           
+        }
+
+
+        [HttpGet("GetUser")]
+        public IActionResult GetUser()
+        {
+            return Ok(new User());
         }
     }
 

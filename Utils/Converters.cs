@@ -7,6 +7,11 @@
 
     public class Converters : IConverters
     {
+        ILogger<Converters> _logger;
+        public Converters(ILogger<Converters> logger) { 
+             _logger = logger;
+        }
+
         public string ConvertMilimeters(double milimeters, string unit)
         {
             try
@@ -26,6 +31,7 @@
             }
             catch (Exception ex)
             {
+                _logger.LogError(ex,ex.Message);
                 return $"An error occurred: {ex.Message}";
             }
         }
